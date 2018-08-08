@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:text="Click me"
+            android:textAlignment="center"
+            android:id="@+id/audioStreambtn"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:text="Play"
+            android:textAlignment="center"
+            android:id="@+id/playMusicButton"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:text="Pause"
+            android:textAlignment="center"
+            android:id="@+id/pauseMusicButton"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>
