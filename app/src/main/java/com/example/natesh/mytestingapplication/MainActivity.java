@@ -17,16 +17,19 @@ public class MainActivity extends AppCompatActivity {
 
     private Button streamBtn;
     MyMediaPlayer myMediaPlayer  ;
+    MyHttpClient httpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         myMediaPlayer = new MyMediaPlayer(this) ;
+        httpClient = new MyHttpClient() ;
         setContentView(R.layout.activity_main);
         streamBtn = (Button) findViewById(R.id.audioStreambtn);
         Button playButton= (Button) findViewById(R.id.playMusicButton);
         Button pauseButton= (Button) findViewById(R.id.pauseMusicButton);
+        Button getAllSongs= (Button) findViewById(R.id.getAllSongs);
 
         streamBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,6 +37,21 @@ public class MainActivity extends AppCompatActivity {
                 myMediaPlayer.startMusicFromURL("http://192.168.0.100:8090/test");
             }
         });
+
+
+        getAllSongs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    httpClient.getAllSongs("http://192.168.0.100:8090/getSongs") ;
+//                    Log.d("testing" ,"Server response : " +  response) ;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override

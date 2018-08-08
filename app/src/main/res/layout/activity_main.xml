@@ -11,32 +11,39 @@
         android:layout_height="match_parent">
 
         <Button
-            android:layout_width="wrap_content"
-            android:text="Click me"
-            android:textAlignment="center"
             android:id="@+id/audioStreambtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_height="wrap_content" />
+            android:text="Click me"
+            android:textAlignment="center" />
 
 
         <Button
-            android:layout_width="wrap_content"
-            android:text="Play"
-            android:textAlignment="center"
             android:id="@+id/playMusicButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_height="wrap_content" />
+            android:text="Play"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/getAllSongs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Get Songs"
+            android:textAlignment="center" />
 
 
         <Button
-            android:layout_width="wrap_content"
-            android:text="Pause"
-            android:textAlignment="center"
             android:id="@+id/pauseMusicButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_height="wrap_content" />
+            android:text="Pause"
+            android:textAlignment="center" />
     </LinearLayout>
-
 
 
 </android.support.constraint.ConstraintLayout>
