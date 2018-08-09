@@ -12,14 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/audioStreambtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Start streaming"
-            android:textAlignment="center" />
-
 
         <Button
             android:id="@+id/playMusicButton"
