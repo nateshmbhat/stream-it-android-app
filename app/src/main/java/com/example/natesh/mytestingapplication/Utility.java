@@ -1,13 +1,36 @@
 package com.example.natesh.mytestingapplication;
 
+import android.util.Log;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class Utility {
+
+    public static ArrayList<Song> getSongsArrayFromFilePaths(ArrayList<String> filepaths){
+        ArrayList<Song> songsList = new ArrayList<>() ;
+        for(String filepath : filepaths){
+            Song song = new Song() ;
+            song.setFullPathName(filepath);
+            Log.d("file" , File.separator) ;
+            Log.d("file" , filepath) ;
+
+            int indexOfSeperator =  filepath.lastIndexOf('/');
+            if(indexOfSeperator<0)
+                indexOfSeperator = filepath.lastIndexOf('\\') ;
+
+            song.setSongName(filepath.substring(indexOfSeperator)) ;
+            songsList.add(song) ;
+        }
+        return songsList ;
+    }
 
     public static HashMap<String , String> parsePostRequest(String postbody){
         //Input string is a url encoded post body and hence has to be split right
@@ -17,7 +40,7 @@ public class Utility {
         for(String keyValue :  postbody.split("&"))
         {
             String[] keyval = keyValue.split("=") ;
-            map.put(decodeUrl(keyval[0]) , decodeUrl(keyval[1])) ;
+            map.put(URLDecoder.decode(keyval[0]) , URLDecoder.decode(keyval[1])) ;
         }
         return map ;
     }

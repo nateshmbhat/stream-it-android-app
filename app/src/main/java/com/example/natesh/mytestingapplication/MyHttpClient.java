@@ -1,5 +1,7 @@
 package com.example.natesh.mytestingapplication;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
@@ -15,6 +17,13 @@ import okhttp3.ResponseBody;
 public class MyHttpClient {
 
     private final OkHttpClient httpclient = new OkHttpClient();
+    ServerResponseHandler respHandler  ;
+    Context context ;
+
+    MyHttpClient(Context context){
+        this.context = context ;
+        respHandler = new ServerResponseHandler(context) ;
+    }
 
     public void getAllSongs(String url) throws IOException {
         Log.d("testing" , "Reqeusting = " + url) ;
@@ -40,7 +49,16 @@ public class MyHttpClient {
                         Log.d("testing" , responseHeaders.name(i) + ": " + responseHeaders.value(i));
                     }
 
-                    Log.d("testing" , " \n\nResponse body : \n" +  responseBody.string());
+                    String responseString = responseBody.string() ;
+
+                    Log.d("testing" , " \n\nResponse body : \n" +  responseString ) ;
+
+                    ((Activity)context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            respHandler.handleGetAllSongs(responseString);
+                        }
+                    });
                 }
             }
         }) ;

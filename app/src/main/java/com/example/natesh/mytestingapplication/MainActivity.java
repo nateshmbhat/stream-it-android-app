@@ -8,28 +8,43 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button streamBtn;
+    Button streamBtn , playButton , pauseButton , getAllSongs ;
     MyMediaPlayer myMediaPlayer  ;
+    ListView allSongsListView ;
     MyHttpClient httpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeAllObjects();
+        setupAllListeners();
+    }
 
+
+    void initializeAllObjects(){
         myMediaPlayer = new MyMediaPlayer(this) ;
-        httpClient = new MyHttpClient() ;
+        httpClient = new MyHttpClient(this) ;
         setContentView(R.layout.activity_main);
-        streamBtn = (Button) findViewById(R.id.audioStreambtn);
-        Button playButton= (Button) findViewById(R.id.playMusicButton);
-        Button pauseButton= (Button) findViewById(R.id.pauseMusicButton);
-        Button getAllSongs= (Button) findViewById(R.id.getAllSongs);
+        streamBtn = findViewById(R.id.audioStreambtn);
+        playButton= findViewById(R.id.playMusicButton);
+        pauseButton= findViewById(R.id.pauseMusicButton);
+        getAllSongs= findViewById(R.id.getAllSongs);
+        allSongsListView = findViewById(R.id.allSongsListView) ;
+    }
+
+
+
+
+    void setupAllListeners(){
 
         streamBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +81,13 @@ public class MainActivity extends AppCompatActivity {
                 myMediaPlayer.pauseMusic();
             }
         }) ;
-    }
 
+        allSongsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("testing" , adapterView.getItemAtPosition(i).toString()) ;
+            }
+        });
+    }
 
 }
