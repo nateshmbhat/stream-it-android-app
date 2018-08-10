@@ -26,7 +26,7 @@ public class Utility {
             if(indexOfSeperator<0)
                 indexOfSeperator = filepath.lastIndexOf('\\') ;
 
-            song.setSongName(filepath.substring(indexOfSeperator)) ;
+            song.setSongName(filepath.substring(indexOfSeperator+1)) ;
             songsList.add(song) ;
         }
         return songsList ;
