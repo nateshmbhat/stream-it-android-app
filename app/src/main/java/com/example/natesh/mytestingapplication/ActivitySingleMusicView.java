@@ -36,8 +36,8 @@ public class ActivitySingleMusicView extends AppCompatActivity {
 
         try {
             String encodedUrl = sHostWithPort+"/getSongInfo?"+ URLEncoder.encode( songPath , "utf-8").replace("+" , "%20");
-            httpClient.makeRequest( encodedUrl , "getSongInfo"); ;
             myMediaPlayer.loadMusicFromRemoteFilePath(sHostWithPort , songPath );
+            httpClient.makeRequest( encodedUrl , "getSongInfo"); ;
         } catch (IOException e) {
             e.printStackTrace();
         }
