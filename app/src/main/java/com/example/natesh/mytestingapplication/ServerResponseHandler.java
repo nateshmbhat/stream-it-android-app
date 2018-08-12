@@ -25,6 +25,13 @@ public class ServerResponseHandler {
     Context context ;
     ServerResponseHandler(Context c ){this.context = c ; }
 
+    public void handleSongInfo(String response)
+    {
+        TextView metadata  = ((Activity)this.context.getApplicationContext()).findViewById(R.id.single_music_metadata_TextView) ;
+        metadata.setText(response);
+    }
+
+
     public void handleGetAllSongs(String response){
        /*
        Expects response in this format :

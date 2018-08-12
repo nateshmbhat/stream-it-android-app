@@ -81,6 +81,9 @@ public class MyMediaPlayer {
         //Stops the music . After this, calling start will start music from beginning
         mediaPlayer.stop() ;
     }
+    public void release(){
+        mediaPlayer.release();
+    }
 
 
 
@@ -110,6 +113,13 @@ public class MyMediaPlayer {
             }
             mediaPlayer.start();
             initialStage = false;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                MediaPlayer.TrackInfo[] trackInfo = mediaPlayer.getTrackInfo() ;
+                for(MediaPlayer.TrackInfo info : trackInfo)
+                {
+                    Log.d("metadata" , info.toString()) ;
+                }
+            }
         }
 
         @Override

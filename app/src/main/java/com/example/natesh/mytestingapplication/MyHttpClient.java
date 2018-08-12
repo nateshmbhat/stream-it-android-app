@@ -25,7 +25,8 @@ public class MyHttpClient {
         respHandler = new ServerResponseHandler(context) ;
     }
 
-    public void getAllSongs(String url) throws IOException {
+
+    public void makeRequest(String url , String requestType) throws IOException {
         Log.d("testing" , "Reqeusting = " + url) ;
         Request request = new Request.Builder()
                 .url(url)
@@ -56,7 +57,14 @@ public class MyHttpClient {
                     ((Activity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            respHandler.handleGetAllSongs(responseString);
+                            if(requestType.equals("getSongs"))
+                            {
+                                respHandler.handleGetAllSongs(responseString);
+                            }
+                            else if(requestType.equals("getSongInfo"))
+                            {
+                                respHandler.handleSongInfo(responseString);
+                            }
                         }
                     });
                 }

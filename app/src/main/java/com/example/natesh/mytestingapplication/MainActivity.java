@@ -1,6 +1,8 @@
 package com.example.natesh.mytestingapplication;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.media.MediaMetadata;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +12,8 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         myMediaPlayer = new MyMediaPlayer(this , progressDialog) ;
         httpClient = new MyHttpClient(this) ;
         setContentView(R.layout.activity_main);
-        playButton= findViewById(R.id.playMusicButton);
-        pauseButton= findViewById(R.id.pauseMusicButton);
         getAllSongs= findViewById(R.id.getAllSongs);
         allSongsListView = findViewById(R.id.allSongsListView) ;
     }
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    httpClient.getAllSongs(sHostWithPort + "/getSongs") ;
+                    httpClient.makeRequest(sHostWithPort + "/getSongs" , "getSongs"); ;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -60,28 +62,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myMediaPlayer.resumeMusic();
-            }
-        });
-
-        pauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myMediaPlayer.pauseMusic();
-            }
-        }) ;
-
         allSongsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Song song = (Song) adapterView.getItemAtPosition(i);
                 Log.d("file" , song.getFullPathName()) ;
 
-                myMediaPlayer.loadMusicFromRemoteFilePath(sHostWithPort , song.getFullPathName());
+                List<String> allSongs = new ArrayList<String>() ;
+
+                for(int pos =0 , n = allSongsListView.getAdapter().getCount(); pos< n  ; pos++)
+                {
+                   allSongs.add(((Song)adapterView.getItemAtPosition(pos)).getFullPathName());
+                }
+
+                startActivity(new Intent( MainActivity.this , ActivitySingleMusicView.class)
+                        .putExtra("songPath" , song.getFullPathName() )
+                        .putStringArrayListExtra("allSongs" , (ArrayList<String>) allSongs)
+                );
+
             }
         });
     }

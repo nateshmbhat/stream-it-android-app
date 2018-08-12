@@ -3,6 +3,17 @@ package com.example.natesh.mytestingapplication;
 public class Song {
     String songName , label  , fullPathName , dirName  , singer , album , lyrics , composer ;
 
+    public Song(String fullPathName) {
+        this.fullPathName = fullPathName;
+        int indexOfSeperator =  fullPathName.lastIndexOf('/');
+        if(indexOfSeperator<0)
+            indexOfSeperator = fullPathName.lastIndexOf('\\') ;
+
+        this.songName = (fullPathName.substring(indexOfSeperator+1)) ;
+    }
+
+    public  Song(){;}
+
     public String getLabel() {
         return label;
     }

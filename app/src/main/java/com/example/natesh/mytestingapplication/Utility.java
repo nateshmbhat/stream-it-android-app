@@ -17,16 +17,11 @@ public class Utility {
     public static ArrayList<Song> getSongsArrayFromFilePaths(ArrayList<String> filepaths){
         ArrayList<Song> songsList = new ArrayList<>() ;
         for(String filepath : filepaths){
-            Song song = new Song() ;
-            song.setFullPathName(filepath);
+
+            Song song = new Song(filepath) ;
             Log.d("file" , File.separator) ;
             Log.d("file" , filepath) ;
 
-            int indexOfSeperator =  filepath.lastIndexOf('/');
-            if(indexOfSeperator<0)
-                indexOfSeperator = filepath.lastIndexOf('\\') ;
-
-            song.setSongName(filepath.substring(indexOfSeperator+1)) ;
             songsList.add(song) ;
         }
         return songsList ;
