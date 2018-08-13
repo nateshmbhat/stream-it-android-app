@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +26,50 @@ public class ServerResponseHandler {
     Context context ;
     ServerResponseHandler(Context c ){this.context = c ; }
 
-    public void handleSongInfo(String response)
+    public void handleSongInfo(String response , Song currentSong)
     {
-        TextView metadata  = ((Activity)this.context).findViewById(R.id.single_music_metadata_TextView) ;
-        metadata.setText((CharSequence)response);
+        //gets an empty currentSong object and populates it with the data from response
+
+        TextView metadata  = ((Activity)this.context).findViewById(R.id.TextView_single_music_metadata) ;
+        TextView songTitle = ((Activity)this.context).findViewById(R.id.TextView_song_title_single_music) ;
+        TextView songAlbum = ((Activity)this.context).findViewById(R.id.TextView_song_album_single_music) ;
+
+        HashMap<String , String> songInfo  = getSongInfoMapping(response) ;
+        Log.d("testing" , songInfo.toString()) ;
+
+        currentSong.setTitle(songInfo.get("title"));
+        currentSong.setAlbum(songInfo.get("album"));
+        currentSong.setComment(songInfo.get("comment"));
+        currentSong.setComposer(songInfo.get("composer"));
+        currentSong.setLyricist(songInfo.get("lyricist"));
+        currentSong.setLyrics(songInfo.get("lyrics"));
+        currentSong.setLyricsSite(songInfo.get("lyricsSite"));
+        currentSong.setArtist(songInfo.get("artist"));
+        currentSong.setYear(songInfo.get("year"));
+        currentSong.setTrack(songInfo.get("track"));
+        currentSong.setGenre(songInfo.get("genre"));
+
+
+        metadata.setText(response);
+        songTitle.setText(currentSong.getTitle());
+        songAlbum.setText(currentSong.getAlbum());
+    }
+
+
+
+    private HashMap<String , String> getSongInfoMapping(String info){
+        HashMap<String , String> map = new HashMap<>() ;
+        String[] split = info.trim().split("\n");
+        for(String song : split){
+            String[] field = song.trim().split("=") ;
+            if(field.length==2){
+                map.put(field[0].trim() , field[1].trim()) ;
+            }
+            else{
+                map.put(field[0].trim() , null) ;
+            }
+        }
+        return map ;
     }
 
 
@@ -69,8 +110,8 @@ class SongArrayAdapter extends  ArrayAdapter<Song>{
 
         Song song = getItem(position) ;
 
-        ((TextView)view.findViewById(R.id.songName)).setText(song.getSongName());
-        ((TextView)view.findViewById(R.id.songLabel)).setText(song.getLabel()) ;
+        ((TextView)view.findViewById(R.id.songName)).setText(song.getFilename());
+        ((TextView)view.findViewById(R.id.songLabel)).setText(song.getAlbum()) ;
 
         return view;
     }

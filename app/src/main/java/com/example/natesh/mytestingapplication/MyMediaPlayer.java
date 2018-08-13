@@ -53,8 +53,9 @@ public class MyMediaPlayer {
         currentPlayer.execute(url) ;
     }
 
-    public void loadMusicFromRemoteFilePath(String host , String path)
+    public void loadMusicFromRemoteFilePath(String host , Song song)
     {
+        String path = song.getFullPathName() ;
         String encodedUrl = new String("");
         try {
             encodedUrl = host+"/getFile?"+ URLEncoder.encode( path , "utf-8").replace("+" , "%20");

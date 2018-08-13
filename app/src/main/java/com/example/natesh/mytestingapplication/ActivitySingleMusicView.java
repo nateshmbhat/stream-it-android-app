@@ -19,6 +19,7 @@ public class ActivitySingleMusicView extends AppCompatActivity {
     Button streamBtn , playButton , pauseButton , getAllSongs ;
     MyMediaPlayer myMediaPlayer  ;
     ListView allSongsListView ;
+    Song currentSong ;
     ProgressDialog progressDialog;
     MyHttpClient httpClient;
     String sHostWithPort ;
@@ -28,16 +29,15 @@ public class ActivitySingleMusicView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_song_layout);
-
-        String songPath  = getIntent().getStringExtra("songPath") ;
-
         initializeAllObjects();
         setupAllListeners();
 
+        String songPath  = getIntent().getStringExtra("songPath") ;
+        currentSong.setFullPathName(songPath);
+
         try {
-            String encodedUrl = sHostWithPort+"/getSongInfo?"+ URLEncoder.encode( songPath , "utf-8").replace("+" , "%20");
-            myMediaPlayer.loadMusicFromRemoteFilePath(sHostWithPort , songPath );
-            httpClient.makeRequest( encodedUrl , "getSongInfo"); ;
+            myMediaPlayer.loadMusicFromRemoteFilePath( sHostWithPort , currentSong);
+            httpClient.getSongInfo(currentSong); ;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,9 +49,13 @@ public class ActivitySingleMusicView extends AppCompatActivity {
         progressDialog = new ProgressDialog(this) ;
         progressDialog.setMessage("Streaming...");
         myMediaPlayer = new MyMediaPlayer(this , progressDialog) ;
+
         httpClient = new MyHttpClient(this) ;
+        httpClient.setServerAddress(sHostWithPort);
+
         playButton= findViewById(R.id.playMusicButton);
         pauseButton= findViewById(R.id.pauseMusicButton);
+        currentSong = new Song() ;
     }
 
 

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -19,10 +21,28 @@ public class MyHttpClient {
     private final OkHttpClient httpclient = new OkHttpClient();
     ServerResponseHandler respHandler  ;
     Context context ;
+    Song currentSong ;
+
+    public void setServerAddress(String serverAddress) {
+        this.serverAddress = serverAddress;
+    }
+
+    String serverAddress ;
 
     MyHttpClient(Context context){
         this.context = context ;
         respHandler = new ServerResponseHandler(context) ;
+    }
+
+    public void getSongInfo( Song currentSong) throws IOException {
+        if(currentSong==null) return ;
+        this.currentSong = currentSong ;
+        try {
+            String encodedUrl = serverAddress+"/getSongInfo?"+ URLEncoder.encode( currentSong.getFullPathName(), "utf-8").replace("+" , "%20");
+            makeRequest( encodedUrl , "getSongInfo"); ;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -63,7 +83,7 @@ public class MyHttpClient {
                             }
                             else if(requestType.equals("getSongInfo"))
                             {
-                                respHandler.handleSongInfo(responseString);
+                                respHandler.handleSongInfo(responseString , currentSong);
                             }
                         }
                     });
