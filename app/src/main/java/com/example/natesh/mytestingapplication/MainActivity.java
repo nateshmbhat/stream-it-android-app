@@ -27,12 +27,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        discoverHosts();
         initializeAllObjects();
         setupAllListeners();
     }
 
 
     void initializeAllObjects(){
+
         sHostWithPort = "http://192.168.0.100:8090" ;
 
         progressDialog = new ProgressDialog(this) ;
@@ -46,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    void discoverHosts(){
+        String myip = Utility.getLocalIp()  ;
+        Log.d("server" , "My ip = " + myip) ;
+    }
 
     void setupAllListeners(){
 
