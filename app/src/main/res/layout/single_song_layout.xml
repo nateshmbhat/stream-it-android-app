@@ -65,6 +65,7 @@
         android:layout_width="match_parent"
         android:id="@+id/TextView_single_music_metadata"
         android:textColor="@color/md_blue_grey_900"
+        android:lineSpacingExtra="3dp"
         android:padding="20dp"
         android:text="My Text"
         android:layout_height="match_parent" />

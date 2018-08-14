@@ -29,10 +29,12 @@ public class ActivitySingleMusicView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_song_layout);
-        initializeAllObjects();
-        setupAllListeners();
 
         String songPath  = getIntent().getStringExtra("songPath") ;
+        sHostWithPort  = getIntent().getStringExtra("serverip") ;
+
+        initializeAllObjects();
+        setupAllListeners();
         currentSong.setFullPathName(songPath);
 
         try {
@@ -45,7 +47,6 @@ public class ActivitySingleMusicView extends AppCompatActivity {
 
 
     void initializeAllObjects(){
-        sHostWithPort = "http://192.168.0.100:8090" ;
         progressDialog = new ProgressDialog(this) ;
         progressDialog.setMessage("Streaming...");
         myMediaPlayer = new MyMediaPlayer(this , progressDialog) ;

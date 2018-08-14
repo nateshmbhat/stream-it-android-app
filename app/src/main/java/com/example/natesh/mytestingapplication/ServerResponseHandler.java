@@ -49,8 +49,13 @@ public class ServerResponseHandler {
         currentSong.setTrack(songInfo.get("track"));
         currentSong.setGenre(songInfo.get("genre"));
 
+        String displayData = "" ;
+        for(String songinfokey : songInfo.keySet()){
+            if(songInfo.get(songinfokey)!=null)
+                displayData+=Character.toUpperCase(songinfokey.charAt(0))+songinfokey.substring(1) + "    =   " + songInfo.get(songinfokey)+"\n" ;
+        }
 
-        metadata.setText(response);
+        metadata.setText(displayData);
         songTitle.setText(currentSong.getTitle());
         songAlbum.setText(currentSong.getAlbum());
     }
