@@ -10,14 +10,17 @@ import android.widget.ProgressBar;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 public class MyMediaPlayer {
 
     MediaPlayer  mediaPlayer ;
+    ArrayList<String> songPathsList ;
     private boolean playPause;
     private ProgressDialog progressDialog;
     private boolean initialStage = true;
     Context context ;
+    SongPathIndex  currentSongPath ;
     Player currentPlayer  ;
 
     MyMediaPlayer(Context context  , ProgressDialog progressBar){
@@ -30,6 +33,29 @@ public class MyMediaPlayer {
         setAllListeners();
     }
 
+    public void setCurrentSongPath(SongPathIndex currentSongPath) {
+        this.currentSongPath = currentSongPath ;
+    }
+
+    public SongPathIndex getCurrentSongPath() {
+        return currentSongPath;
+    }
+
+    public void setSongPlaytime(int value){
+        mediaPlayer.seekTo(value*1000);
+    }
+
+    public void getSongPlaytime(int value){
+        mediaPlayer.getCurrentPosition() ;
+    }
+
+    public void setSongPathsList(ArrayList<String> songPathsList){this.songPathsList= songPathsList ; }
+
+    public ArrayList<String> getSongPathsList() {
+        return songPathsList;
+    }
+
+    public boolean isPlaying(){return mediaPlayer.isPlaying() ; }
 
     public void setAllListeners(){
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -42,7 +68,6 @@ public class MyMediaPlayer {
             }
         });
     }
-
 
 
     public void startMusicFromURL(String url){
@@ -96,6 +121,7 @@ public class MyMediaPlayer {
                 mediaPlayer.reset();
                 mediaPlayer.setDataSource(strings[0]);
                 mediaPlayer.prepare();
+                setCurrentSongPath(new SongPathIndex(strings[0] , songPathsList.indexOf(strings[0])));
                 prepared = true;
 
             } catch (Exception e) {
@@ -130,10 +156,35 @@ public class MyMediaPlayer {
                 progressDialog.dismiss();
             }
 
-            progressDialog.setMessage("Buffering...");
+            progressDialog.setMessage("Streaming...");
             progressDialog.show();
         }
     }
 
 }
 
+
+class SongPathIndex{
+    String songPath ;int index  ;
+
+    public void setSongPath(String songPath) {
+        this.songPath = songPath;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public String getSongPath() {
+        return songPath;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public SongPathIndex(String songPath, int index) {
+        this.songPath = songPath;
+        this.index = index;
+    }
+}

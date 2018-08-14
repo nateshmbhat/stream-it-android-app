@@ -1,25 +1,35 @@
 package com.example.natesh.mytestingapplication;
 
 public class Song {
-    String filename , fullPathName , artist , album , year , track , title , composer , comment , genre, lyricist , lyrics , lyricsSite ;
+    String filename, fullPathName,trackLength , artist, album, year, track, title, composer, comment, genre, lyricist, lyrics, lyricsSite;
 
     public Song(String fullPathName) {
-        this.fullPathName = fullPathName;
-        int indexOfSeperator =  fullPathName.lastIndexOf('/');
-        if(indexOfSeperator<0)
-            indexOfSeperator = fullPathName.lastIndexOf('\\') ;
-
-        this.filename = (fullPathName.substring(indexOfSeperator+1)) ;
+        setFullPathName(fullPathName);
     }
 
-    public  Song(){;}
+    public Song() {
+        ;
+    }
 
     public void setFilename(String filename) {
         this.filename = filename;
     }
 
+    public String getTrackLength() {
+        return trackLength;
+    }
+
+    public void setTrackLength(String trackLength) {
+        this.trackLength = trackLength;
+    }
+
     public void setFullPathName(String fullPathName) {
+        int indexOfSeperator = fullPathName.lastIndexOf('/');
+        if (indexOfSeperator < 0)
+            indexOfSeperator = fullPathName.lastIndexOf('\\');
+
         this.fullPathName = fullPathName;
+        setFilename(fullPathName.substring(indexOfSeperator + 1));
     }
 
     public void setArtist(String artist) {
@@ -49,6 +59,7 @@ public class Song {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
 
     public void setGenre(String genre) {
         this.genre = genre;

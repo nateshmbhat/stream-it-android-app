@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.File;
@@ -33,6 +34,7 @@ public class ServerResponseHandler {
         TextView metadata  = ((Activity)this.context).findViewById(R.id.TextView_single_music_metadata) ;
         TextView songTitle = ((Activity)this.context).findViewById(R.id.TextView_song_title_single_music) ;
         TextView songAlbum = ((Activity)this.context).findViewById(R.id.TextView_song_album_single_music) ;
+        SeekBar songController = ((Activity)this.context).findViewById(R.id.SeekBar_song_controller_single_song_view) ;
 
         HashMap<String , String> songInfo  = getSongInfoMapping(response) ;
         Log.d("testing" , songInfo.toString()) ;
@@ -40,6 +42,7 @@ public class ServerResponseHandler {
         currentSong.setTitle(songInfo.get("title"));
         currentSong.setAlbum(songInfo.get("album"));
         currentSong.setComment(songInfo.get("comment"));
+        currentSong.setTrackLength(songInfo.get("trackLength"));
         currentSong.setComposer(songInfo.get("composer"));
         currentSong.setLyricist(songInfo.get("lyricist"));
         currentSong.setLyrics(songInfo.get("lyrics"));
@@ -56,8 +59,15 @@ public class ServerResponseHandler {
         }
 
         metadata.setText(displayData);
-        songTitle.setText(currentSong.getTitle());
-        songAlbum.setText(currentSong.getAlbum());
+        if(currentSong.getTitle()!=null) songTitle.setText(currentSong.getTitle());
+        else songTitle.setText(currentSong.getFilename());
+
+        if(currentSong.getAlbum()!=null) songAlbum.setText(currentSong.getAlbum());
+        else songAlbum.setText("album");
+
+        if(currentSong.getTrackLength()!=null){
+            songController.setMax(Integer.parseInt(currentSong.getTrackLength()));
+        }
     }
 
 
