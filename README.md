@@ -1,6 +1,6 @@
 # Stream It
 
-> The power to stream tons of music from your PCs onto your phones effortlessly.
+> **The power to stream tons of music from your PCs onto your phones effortlessly.**
 
 
 ### Problem Statement : 
