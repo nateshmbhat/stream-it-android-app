@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ListView allSongsListView;
     ProgressDialog progressDialog;
     MyHttpClient httpClient;
-    String sHostWithPort;
+    String sHostWithPort  ;
     final int port = 45672;
 
     @Override
@@ -125,13 +125,23 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
+
             String myip = Utility.getLocalIp();
+//           HACK !!!
+            if(1==1)return "http://192.168.43.148:45672" ;
 
             Log.d("server", "My ip = " + myip);
 
-            String netIp = myip.substring(0, myip.lastIndexOf('.'));
-            netIp = netIp.substring(0, netIp.lastIndexOf('.'));
+            String lastIp = myip.substring(0, myip.lastIndexOf('.'));
+            String netIp = lastIp.substring(0, lastIp.lastIndexOf('.'));
             Log.d("server", "Subnet ip = " + netIp);
+
+            for(int j = 0 ; j<256 ; j++ ) {
+                    if (checkConnection( lastIp+  "." + j )) {
+                        myip = "http://" + lastIp+"." + j+":"+port ;
+                        return myip ;
+                    }
+                }
 
             boolean doneFlag = false ;
             for (int i = 0; i < 256; i++) {

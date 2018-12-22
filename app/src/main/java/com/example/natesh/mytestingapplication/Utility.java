@@ -23,6 +23,10 @@ import java.util.HashMap;
 public class Utility {
 
     public static String getLocalIp(){
+
+
+//        if(1==1) return "192.168.224.90" ;
+
         ArrayList<String> ipsList = new ArrayList<>() ;
         String localIp= new String() ;
         Enumeration e = null;
